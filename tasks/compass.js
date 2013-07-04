@@ -42,10 +42,9 @@ module.exports = function (grunt) {
 		grunt.log.writeln();
 		grunt.log.writeln('Compiling...\n');
 
-		// use an async queue with concurrency of 1 to simulate a procedural queue to execute each Compass compile command
+		// use an async queue with concurrency of 1 to perform procedural execution of the 'compass compile' command in each target cwd
 		var targetQueue = queue(function (task, callback) {
-			//childProcess = cp.exec('compass compile --output-style compressed --force', {
-			childProcess = cp.exec('compass compile', { cwd: task.directory });
+			childProcess = cp.exec('compass compile', { cwd: task.directory }); // @TODO allow compile-time options
 			childProcess.stdout.on('data', function (d) { log.write(d); });
 
 			// listen for process exit code
