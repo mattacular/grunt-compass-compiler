@@ -1,0 +1,43 @@
+{
+	"name": "grunt-compass-compiler",
+	"description": "Grunt task to compile multiple Compass projects",
+	"version": "0.0.1",
+	"homepage": "https://github.com/mattacular/grunt-compass-compiler",
+	"author": {
+		"name": "Matt Stills",
+		"email": "mattacular@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/mattacular/grunt-compass-compiler.git"
+	},
+	"bugs": {
+		"url": "https://github.com/mattacular/grunt-compass-compiler/issues"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://github.com/mattacular/grunt-compass-compiler/blob/master/LICENSE-MIT"
+		}
+	],
+	"main": "grunt.js",
+	"engines": {
+		"node": "*"
+	},
+	"devDependencies": {
+		"grunt-contrib-jshint": "~0.2.0",
+		"grunt-contrib-nodeunit": "~0.1.2",
+		"grunt-contrib-clean": "~0.4.0",
+		"grunt": "~0.4.0"
+	},
+	"peerDependencies": {
+		"grunt": "~0.4.0"
+	},
+	"keywords": [
+		"gruntplugin",
+		"grunt",
+		"css",
+		"sass",
+		"compass"
+	]
+}
