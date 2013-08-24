@@ -3,7 +3,7 @@ grunt-compass-compiler
 
 Compass compiler with support for multiple config.rb targets.
 
-Better README coming soon. For now, see the project's own Gruntfile.js for an example of how to use the task.
+Better README coming real soon. For now, see the project's own Gruntfile.js for an example of how to use the task.
 
 notes
 =====
