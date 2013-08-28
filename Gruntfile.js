@@ -17,19 +17,28 @@ module.exports = function (grunt) {
 			]
 		},
 		compass: {
-			'glob': {
-				'files': {
+			glob: {
+				files: {
 					src: ['tests/modules/**/*']
 				}
 			},
-			'specific': {
-				'files': {
+			specific: {
+				files: {
 					src: ['tests/modules/rester', 'tests/modules/tester']
+				}
+			},
+			compressed: {
+				options: {
+					// you may override settings in the targetted project's config.rb files here
+					output_style: 'compressed'
+				},
+				files: {
+					src: ['tests/modules/**/*']
 				}
 			}
 		},
 		clean: {
-			'css': {
+			css: {
 				src: ['tests/modules/**/*.css']
 			}
 		}

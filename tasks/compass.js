@@ -13,21 +13,40 @@ module.exports = function (grunt) {
 		f = require('util').format,
 		cp = require('child_process'),
 		queue = require('async').queue,
-		log = grunt.log;
+		log = grunt.log,
+		transformOptions;
+
+	// helper
+	transformOptions = function (opts) {
+		var retVal = ' ',
+			value, option;
+
+		for (option in opts) {
+			value = opts[option];
+
+			if (value) {
+				retVal += '--' + option.replace('_', '-') + '=' + value;
+			}
+		}
+
+		return (retVal === ' ') ? '' : retVal + ' --force'; // force option is needed if we are overriding config.rb options via CLI
+	};
 
 	// the 'compass' task
 	grunt.registerMultiTask('compass', 'Compile multiple Compass projects.', function () {
 		var options = this.options({
+				output_style: false
 			}),
-			compilerOptions = {},
-			files, targets = [],
-			done = this.async(), childProcess;
+			compilerOptions = false,
+			targets = [],
+			done = this.async(),
+			files, childProcess, targetQueue;
 
 		// gather a list of targets with a 'config.rb' from all the file matches found by Grunt's globbing engine
 		this.files.forEach(function (f) {
 			for (var i = 0; i < f.src.length; i += 1) {
 				// filter out folders that don't have a config.rb (ignoring common sub-folders to speed things up)
-				if (!f.src[i].match(/sass|css|js|img|inc[(?:lude)]|template[s]?/) && grunt.file.isDir(f.src[i])) {
+				if (!f.src[i].match(/sass|css|js|img|inc[(?:ludes)]|template[s]?/) && grunt.file.isDir(f.src[i])) {
 					files = fs.readdirSync(f.src[i]);
 					
 					if (_.indexOf(files, 'config.rb') !== -1) {
@@ -38,13 +57,24 @@ module.exports = function (grunt) {
 			}
 		});
 
+		// transform task options into arguments compatible with the Compass CLI utility
+		compilerOptions = transformOptions(options);
+
+		console.log(compilerOptions);
+
+		// begin
 		grunt.log.writeln('Compass projects found: ', f(targets));
 		grunt.log.writeln();
-		grunt.log.writeln('Compiling...\n');
+
+		if (compilerOptions) {
+			grunt.log.writeln('Compiling w/options: ' + compilerOptions + '...');
+		} else {
+			grunt.log.writeln('Compiling...\n');
+		}
 
 		// use an async queue with concurrency of 1 to perform procedural execution of the 'compass compile' command in each target cwd
-		var targetQueue = queue(function (task, callback) {
-			childProcess = cp.exec('compass compile', { cwd: task.directory }); // @TODO allow compile-time options
+		targetQueue = queue(function (task, callback) {
+			childProcess = cp.exec('compass compile' + compilerOptions, { cwd: task.directory }); // @TODO allow compile-time options
 			childProcess.stdout.on('data', function (d) { log.write(d); });
 
 			// listen for process exit code
