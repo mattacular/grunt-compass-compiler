@@ -18,24 +18,27 @@ module.exports = function (grunt) {
 
 	// helper
 	transformOptions = function (opts) {
-		var retVal = ' ',
+		var retVal = '',
 			value, option;
 
 		for (option in opts) {
 			value = opts[option];
 
 			if (value) {
-				retVal += '--' + option.replace('_', '-') + '=' + value;
+				retVal += ' --' + option.replace('_', '-') + ((typeof value === 'string') ? '=' + value : '');
 			}
 		}
 
-		return (retVal === ' ') ? '' : retVal + ' --force'; // force option is needed if we are overriding config.rb options via CLI
+		return (retVal === '') ? '' : retVal + ' --force'; // force option is needed if we are overriding config.rb options via CLI
 	};
 
 	// the 'compass' task
 	grunt.registerMultiTask('compass', 'Compile multiple Compass projects.', function () {
 		var options = this.options({
-				output_style: false
+				output_style: false,
+				sass_dir: false,
+				css_dir: false,
+				javascripts_dir: false
 			}),
 			compilerOptions = false,
 			targets = [],
@@ -59,8 +62,6 @@ module.exports = function (grunt) {
 
 		// transform task options into arguments compatible with the Compass CLI utility
 		compilerOptions = transformOptions(options);
-
-		console.log(compilerOptions);
 
 		// begin
 		grunt.log.writeln('Compass projects found: ', f(targets));

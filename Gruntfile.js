@@ -18,6 +18,11 @@ module.exports = function (grunt) {
 		},
 		compass: {
 			glob: {
+				options: {
+					css_dir: 'css',
+					sass_dir: 'sass',
+					output_style: (grunt.option('env') === 'prod') ? 'compressed' : 'expanded'
+				},
 				files: {
 					src: ['tests/modules/**/*']
 				}

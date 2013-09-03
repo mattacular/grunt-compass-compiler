@@ -1,7 +1,7 @@
 load '../../compassTest'
 
-http_path = "/"
-css_dir = "css"
-sass_dir = "sass"
+http_path = '/'
+css_dir = 'css'
+sass_dir = 'sass'
 
-output_style = ":expanded"
+output_style = :nested
