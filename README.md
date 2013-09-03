@@ -1,4 +1,4 @@
-# grunt-handlebars-compiler
+# grunt-compass-compiler
 
 A [Grunt](http://gruntjs.com) plugin for compiling multiple Compass projects (ie. compiles against many config.rbs). This is useful for highly modular project structures such as those of Drupal and Wordpress.
 
