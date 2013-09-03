@@ -1,7 +1,7 @@
 var grunt	= require('grunt'),
 	fs		= require('fs');
 
-exports.handlebars = function (test) {
+exports.compass = function (test) {
 	'use strict';
 
 	var i, actual, expected, activeTest, tests;
@@ -10,12 +10,14 @@ exports.handlebars = function (test) {
 	tests = [
 		{
 			name: 'vanilla',
-			files: ['test-no-options/expected/test.css'],
+			compare: 'test-no-options/tmp/test.css',
+			expected: 'test-no-options/expected/test.css',
 			assertion: 'The vanilla (no options) compiled output should match expected folder.'
 		},
 		{
 			name: 'all',
-			files: ['test-all-options/expected/test.css'], 
+			compare: 'test-all-options/tmp/test.css',
+			expected: 'test-all-options/expected/test.css',
 			assertion: 'The "all options" output should match the expected folder.'
 		}
 	];
@@ -25,9 +27,8 @@ exports.handlebars = function (test) {
 	for (i = 0; i < tests.length; i += 1) {
 		activeTest = tests[i];
 
-
-		actual = grunt.file.read('tmp/out' + activeTest.prefix + '.compiled.js');
-		expected = grunt.file.read('test/expected/helloWorld' + activeTest.prefix + '.compiled.js');
+		actual = grunt.file.read('tests/modules/' + activeTest.compare);
+		expected = grunt.file.read('tests/modules/' + activeTest.expected);
 
 		test.equal(actual, expected, activeTest.assertion);
 	}

@@ -19,17 +19,20 @@ module.exports = function (grunt) {
 		compass: {
 			glob: {
 				options: {
-					css_dir: 'css',
+					css_dir: 'tmp',
 					sass_dir: 'sass',
 					output_style: (grunt.option('env') === 'prod') ? 'compressed' : 'expanded'
 				},
 				files: {
-					src: ['tests/modules/**/*']
+					src: ['tests/modules/test-all-options']
 				}
 			},
-			specific: {
+			glob_no_options: {
+				options: {
+					css_dir: 'tmp'
+				},
 				files: {
-					src: ['tests/modules/rester', 'tests/modules/tester']
+					src: ['tests/modules/test-no-options']
 				}
 			},
 			compressed: {
@@ -40,12 +43,31 @@ module.exports = function (grunt) {
 				files: {
 					src: ['tests/modules/**/*']
 				}
+			},
+			clean: {
+				options: {
+					css_dir: 'expected',
+					sass_dir: 'sass',
+					output_style: 'expanded'
+				},
+				files: {
+					src: ['tests/modules/test-all-options']
+				}
+			},
+			clean_no_opts: {
+				files: {
+					src: ['tests/modules/test-no-options']
+				}
 			}
 		},
 		clean: {
 			css: {
-				src: ['tests/modules/**/*.css']
+				src: ['tests/modules/**/tmp/*.css']
 			}
+		},
+		// test suite
+		nodeunit: {
+			tests: ['tests/**/*_test.js']
 		}
 	});
 
@@ -56,5 +78,6 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
 	// lint and test before declaring a revision stable
-	grunt.registerTask('default', ['jshint', 'clean:css', 'compass:glob']);
+	grunt.registerTask('default', ['jshint', 'clean:css', 'compass:compressed']);
+	grunt.registerTask('test', ['jshint', 'clean:css', 'compass:glob', 'compass:glob_no_options', 'nodeunit']);
 };
