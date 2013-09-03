@@ -87,7 +87,7 @@ module.exports = function (grunt) {
 				log.writeln('\t`-->'.cyan + ' Done compiling Compass project @ ' + task.directory.cyan);
 				callback(); // task is finished
 			});
-		}, 1);
+		}, 4);
 
 		// queue each target
 		_.each(targets, function (item, idx) {

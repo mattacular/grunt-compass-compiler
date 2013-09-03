@@ -19,6 +19,24 @@ exports.compass = function (test) {
 			compare: 'test-all-options/tmp/test.css',
 			expected: 'test-all-options/expected/test.css',
 			assertion: 'The "all options" output should match the expected folder.'
+		},
+		{
+			name: 'many',
+			compare: 'test-many/tmp/test1.css',
+			expected: 'test-many/tmp/test1.css',
+			assertion: 'The first of ten in the "many" test should match the expected folder.'
+		},
+		{
+			name: 'many',
+			compare: 'test-many/tmp/test5.css',
+			expected: 'test-many/tmp/test5.css',
+			assertion: 'The fifth of ten in the "many" test should match the expected folder.'
+		},
+		{
+			name: 'many',
+			compare: 'test-many/tmp/test10.css',
+			expected: 'test-many/tmp/test10.css',
+			assertion: 'The tenth of ten in the "many" test should match the expected folder.'
 		}
 	];
 

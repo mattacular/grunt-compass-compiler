@@ -35,6 +35,19 @@ module.exports = function (grunt) {
 					src: ['tests/modules/test-no-options']
 				}
 			},
+			many: {
+				options: {
+					css_dir: 'tmp'
+				},
+				files: {
+					src: ['tests/modules/test-many']
+				}
+			},
+			all_modules: {
+				files: {
+					src: ['tests/modules/**/*']
+				}
+			},
 			compressed: {
 				options: {
 					// you may override settings in the targetted project's config.rb files here
@@ -58,6 +71,11 @@ module.exports = function (grunt) {
 				files: {
 					src: ['tests/modules/test-no-options']
 				}
+			},
+			clean_many: {
+				files: {
+					src: ['tests/modules/test-many']
+				}
 			}
 		},
 		clean: {
@@ -79,5 +97,5 @@ module.exports = function (grunt) {
 
 	// lint and test before declaring a revision stable
 	grunt.registerTask('default', ['jshint', 'clean:css', 'compass:compressed']);
-	grunt.registerTask('test', ['jshint', 'clean:css', 'compass:glob', 'compass:glob_no_options', 'nodeunit']);
+	grunt.registerTask('test', ['jshint', 'clean:css', 'compass:glob', 'compass:glob_no_options', 'compass:many', 'nodeunit']);
 };
