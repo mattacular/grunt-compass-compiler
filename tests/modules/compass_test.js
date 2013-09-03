@@ -6,7 +6,7 @@ exports.compass = function (test) {
 
 	var i, actual, expected, activeTest, tests;
 
-	// define tests for the handlebars task here
+	// define tests for the compass task here
 	tests = [
 		{
 			name: 'vanilla',
