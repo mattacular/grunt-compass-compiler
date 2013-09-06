@@ -16,12 +16,13 @@ module.exports = function (grunt) {
 				'tasks/compass.js'
 			]
 		},
+		// tasks used to test this task
 		compass: {
 			glob: {
 				options: {
 					css_dir: 'tmp',
 					sass_dir: 'sass',
-					output_style: (grunt.option('env') === 'prod') ? 'compressed' : 'expanded'
+					output_style: 'compressed'
 				},
 				files: {
 					src: ['tests/modules/test-all-options']
@@ -43,25 +44,11 @@ module.exports = function (grunt) {
 					src: ['tests/modules/test-many']
 				}
 			},
-			all_modules: {
-				files: {
-					src: ['tests/modules/**/*']
-				}
-			},
-			compressed: {
-				options: {
-					// you may override settings in the targetted project's config.rb files here
-					output_style: 'compressed'
-				},
-				files: {
-					src: ['tests/modules/**/*']
-				}
-			},
 			clean: {
 				options: {
 					css_dir: 'expected',
 					sass_dir: 'sass',
-					output_style: 'expanded'
+					output_style: 'compressed'
 				},
 				files: {
 					src: ['tests/modules/test-all-options']
@@ -81,6 +68,9 @@ module.exports = function (grunt) {
 		clean: {
 			css: {
 				src: ['tests/modules/**/tmp/*.css']
+			},
+			expected: {
+				src: ['tests/modules/**/expected/*.css']
 			}
 		},
 		// test suite
@@ -95,7 +85,8 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-	// lint and test before declaring a revision stable
-	grunt.registerTask('default', ['jshint', 'clean:css', 'compass:compressed']);
+	// lint and test before declaring a revision stable.
+	grunt.registerTask('default', ['jshint']);
+	grunt.registerTask('build-tests', ['clean:expected', 'compass:clean_many', 'compass:clean_no_opts', 'compass:clean']);
 	grunt.registerTask('test', ['jshint', 'clean:css', 'compass:glob', 'compass:glob_no_options', 'compass:many', 'nodeunit']);
 };
