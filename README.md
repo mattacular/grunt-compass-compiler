@@ -4,7 +4,7 @@ A [Grunt](http://gruntjs.com) plugin for compiling multiple Compass projects (ie
 
 ## Getting Started
 
-***IMPORTANT**: This plugin requires Grunt 0.4 or higher and Compass 0.12.2 or higher - it is recommended that you always run the latest version
+**IMPORTANT**: This plugin requires at least ***Grunt 0.4*** or higher and ***Compass 0.12.2*** or higher - it is recommended that you always run the latest versions of both.
 
 Ensure you have Compass installed and in your PATH by checking for its version. If you get an error, install it.
 
