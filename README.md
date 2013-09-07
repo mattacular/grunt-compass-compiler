@@ -1,6 +1,6 @@
 # grunt-compass-compiler
 
-A [Grunt](http://gruntjs.com) plugin for compiling multiple Compass projects (ie. compiles against many config.rb targets). This is useful for highly modular project structures such as those of Drupal and Wordpress.
+A [Grunt](http://gruntjs.com) plugin for compiling multiple Compass projects (ie. it compiles against many config.rb targets). This is useful for highly modular project structures such as those of Drupal and Wordpress.
 
 ## Getting Started
 
@@ -48,13 +48,13 @@ This allows you to use the 'compass' task to specify targets!
 The task will look for a 'prod.rb' (instead of config.rb) file in each target directory found. It will execute 'compass compile' along with any given option on each target.
 
 ```bash
-grunt compass:modules --env=prod
+$ grunt compass:modules --env=prod
 ```
 
 Would compile each prod.rb found anywhere inside "sites/all/modules" by executing this command:
 
 ```bash
-compass compile -c prod.rb --sass-dir=sass --javascripts-dir=js --css-dir=css --output-style=compressed
+$ compass compile -c prod.rb --sass-dir=sass --javascripts-dir=js --css-dir=css --output-style=compressed
 ```
 
 ## Documentation
