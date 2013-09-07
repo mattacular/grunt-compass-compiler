@@ -22,7 +22,8 @@ module.exports = function (grunt) {
 				options: {
 					css_dir: 'tmp',
 					sass_dir: 'sass',
-					output_style: 'compressed'
+					output_style: 'compressed',
+					c: 'prod.rb'
 				},
 				files: {
 					src: ['tests/modules/test-all-options']
@@ -48,7 +49,8 @@ module.exports = function (grunt) {
 				options: {
 					css_dir: 'expected',
 					sass_dir: 'sass',
-					output_style: 'compressed'
+					output_style: 'compressed',
+					c: 'prod.rb'
 				},
 				files: {
 					src: ['tests/modules/test-all-options']

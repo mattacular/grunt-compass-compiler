@@ -25,7 +25,7 @@ module.exports = function (grunt) {
 			value = opts[option];
 
 			if (value) {
-				retVal += ' --' + option.replace('_', '-') + ((typeof value === 'string') ? '=' + value : '');
+				retVal += (option !== 'c' ? ' --' : ' -') + option.replace('_', '-') + ((typeof value === 'string') ? (option !== 'c' ? '=' : ' ') + value : '');
 			}
 		}
 
@@ -38,21 +38,24 @@ module.exports = function (grunt) {
 				output_style: false,
 				sass_dir: false,
 				css_dir: false,
-				javascripts_dir: false
+				javascripts_dir: false,
+				ignore_pattern: /sass|css|js|img|inc[(?:ludes)]|template[s]?/,
+				c: false
 			}),
 			compilerOptions = false,
 			targets = [],
 			done = this.async(),
+			configFile = options.c || 'config.rb',
 			files, childProcess, targetQueue;
 
 		// gather a list of targets with a 'config.rb' from all the file matches found by Grunt's globbing engine
 		this.files.forEach(function (f) {
 			for (var i = 0; i < f.src.length; i += 1) {
 				// filter out folders that don't have a config.rb (ignoring common sub-folders to speed things up)
-				if (!f.src[i].match(/sass|css|js|img|inc[(?:ludes)]|template[s]?/) && grunt.file.isDir(f.src[i])) {
+				if (!f.src[i].match(options.ignore_pattern) && grunt.file.isDir(f.src[i])) {
 					files = fs.readdirSync(f.src[i]);
 					
-					if (_.indexOf(files, 'config.rb') !== -1) {
+					if (_.indexOf(files, configFile) !== -1) {
 						// contains config.rb, add it to the list of compile targets
 						targets.push(f.src[i]);
 					}
@@ -61,6 +64,7 @@ module.exports = function (grunt) {
 		});
 
 		// transform task options into arguments compatible with the Compass CLI utility
+		delete options.ignore_pattern;
 		compilerOptions = transformOptions(options);
 
 		// begin

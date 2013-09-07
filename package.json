@@ -1,7 +1,7 @@
 {
 	"name": "grunt-compass-compiler",
 	"description": "Grunt task to compile multiple Compass projects",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"homepage": "https://github.com/mattacular/grunt-compass-compiler",
 	"author": {
 		"name": "Matt Stills",

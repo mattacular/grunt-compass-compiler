@@ -27,7 +27,9 @@ This allows you to use the 'compass' task to specify targets!
 				css_dir: 'css',
 				sass_dir: 'sass',
 				javascripts_dir: 'js',
-				output_style: (grunt.option('env') === 'prod') ? 'compressed' : 'expanded'
+				output_style: (grunt.option('env') === 'prod') ? 'compressed' : 'expanded',
+				c: 'prod.rb'	// look for something other than config.rb and use it to compile
+				ignore_pattern: /sass|css|js|img|images|inc|includes/,	// paths you know won't contain a compass config
 			},
 			files: {
 				src: ['sites/all/modules/**/*']
@@ -42,7 +44,7 @@ The task will look for a 'config.rb' file in each target directory found. It wil
 grunt compass:modules --env=prod
 ```
 
-Would execute each config.rb found anywhere inside "sites/all/modules" with:
+Would compile each prod.rb found anywhere inside "sites/all/modules" by executing this command:
 
 ```bash
 compass compile --sass-dir=sass --javascripts-dir=js --css-dir=css --output-style=compressed
