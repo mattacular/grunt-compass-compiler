@@ -56,6 +56,18 @@ module.exports = function (grunt) {
 					src: ['tests/modules/test-all-options']
 				}
 			},
+			external_config: {
+				options: {
+					// use a master config for all targets matched. note that this option requires an absolute path that will be unique to your machine.
+					external_config: '/Users/mattstills/Sites/grunt-compass-compiler/tests/modules/config.rb',
+					// instead of basing targets off existence of config.rb, check for 'sass' folder (note no trailing slash)
+					custom_match_pattern: /^sass$/,
+					css_dir: 'tmp'
+				},
+				files: {
+					src: ['tests/modules/test-external-config/**']
+				}
+			},
 			clean_no_opts: {
 				files: {
 					src: ['tests/modules/test-no-options']
@@ -68,9 +80,7 @@ module.exports = function (grunt) {
 			},
 			clean_external_config: {
 				options: {
-					// use a master config for all targets matched. note that this option requires an absolute path that will be unique to your machine.
 					external_config: '/Users/mattstills/Sites/grunt-compass-compiler/tests/modules/config.rb',
-					// instead of basing targets off existence of config.rb, check for 'sass' folder (note no trailing slash)
 					custom_match_pattern: /^sass$/
 				},
 				files: {
@@ -100,6 +110,6 @@ module.exports = function (grunt) {
 
 	// lint and test before declaring a revision stable.
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('build-tests', ['clean:expected', 'compass:clean_many', 'compass:clean_no_opts', 'compass:clean']);
-	grunt.registerTask('test', ['jshint', 'clean:css', 'compass:glob', 'compass:glob_no_options', 'compass:many', 'nodeunit']);
+	grunt.registerTask('build-tests', ['clean:expected', 'compass:clean_external_config', 'compass:clean_many', 'compass:clean_no_opts', 'compass:clean']);
+	grunt.registerTask('test', ['jshint', 'clean:css', 'compass:glob', 'compass:glob_no_options', 'compass:many', 'compass:external_config', 'nodeunit']);
 };

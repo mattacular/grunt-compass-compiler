@@ -23,20 +23,32 @@ exports.compass = function (test) {
 		{
 			name: 'many',
 			compare: 'test-many/tmp/test1.css',
-			expected: 'test-many/tmp/test1.css',
+			expected: 'test-many/expected/test1.css',
 			assertion: 'The first of ten in the "many" test should match the expected folder.'
 		},
 		{
-			name: 'many',
+			name: 'many2',
 			compare: 'test-many/tmp/test5.css',
-			expected: 'test-many/tmp/test5.css',
+			expected: 'test-many/expected/test5.css',
 			assertion: 'The fifth of ten in the "many" test should match the expected folder.'
 		},
 		{
-			name: 'many',
+			name: 'many3',
 			compare: 'test-many/tmp/test10.css',
-			expected: 'test-many/tmp/test10.css',
+			expected: 'test-many/expected/test10.css',
 			assertion: 'The tenth of ten in the "many" test should match the expected folder.'
+		},
+		{
+			name: 'external',
+			compare: 'test-external-config/module1/tmp/test.css',
+			expected: 'test-external-config/module1/expected/test.css',
+			assertion: 'The first module should be compiled using external config.rb settings.'
+		},
+		{
+			name: 'external2',
+			compare: 'test-external-config/module2/tmp/test.css',
+			expected: 'test-external-config/module2/expected/test.css',
+			assertion: 'The second module should be compiled using external config.rb settings.'
 		}
 	];
 
