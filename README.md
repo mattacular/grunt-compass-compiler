@@ -61,8 +61,9 @@ Would compile each prod.rb found anywhere inside "sites/all/modules" by executin
 $ compass compile -c prod.rb --sass-dir=sass --javascripts-dir=js --css-dir=css --output-style=compressed
 ```
 
-**USING ADVANCED OPTIONS**
+## Using Advanced Options
 
+**Master Config.rb Strategy**
 With the advanced options, you can use this plugin to compile a project with decentralized Compass modules but all using a centralized or master config.rb.
 
 Consider a project with this structure:
