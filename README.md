@@ -31,11 +31,13 @@ This allows you to use the 'compass' task to specify targets!
 	compass: {
 		modules: {
 			options: {
+				// standard compass cli options
 				css_dir: 'css',
 				sass_dir: 'sass',
 				javascripts_dir: 'js',
 				output_style: (grunt.option('env') === 'prod') ? 'compressed' : 'expanded',
 				c: 'prod.rb'	// look for something other than config.rb and use it to compile
+				// advanced options
 				ignore_pattern: /sass|css|js|img|images|inc|includes/,	// paths you know won't contain a compass config
 				external_config: '/absolute/path/config.rb' // use a single config.rb to compile all targets. must be an absolute path.
 				custom_match_pattern: /^folder$/ // use something other than config.rb to match compass targets (eg. a subfolder of a glob match)
