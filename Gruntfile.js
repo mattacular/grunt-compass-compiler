@@ -65,6 +65,17 @@ module.exports = function (grunt) {
 				files: {
 					src: ['tests/modules/test-many']
 				}
+			},
+			clean_external_config: {
+				options: {
+					// use a master config for all targets matched. note that this option requires an absolute path that will be unique to your machine.
+					external_config: '/Users/mattstills/Sites/grunt-compass-compiler/tests/modules/config.rb',
+					// instead of basing targets off existence of config.rb, check for 'sass' folder (note no trailing slash)
+					custom_match_pattern: /^sass$/
+				},
+				files: {
+					src: ['tests/modules/test-external-config/**']
+				}
 			}
 		},
 		clean: {

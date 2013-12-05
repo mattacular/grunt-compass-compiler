@@ -40,7 +40,9 @@ module.exports = function (grunt) {
 				css_dir: false,
 				javascripts_dir: false,
 				ignore_pattern: /sass|css|js|img|inc[(?:ludes)]|template[s]?/,
-				c: false
+				custom_match_pattern: false,
+				c: false,
+				external_config: false
 			}),
 			compilerOptions = false,
 			targets = [],
@@ -48,14 +50,31 @@ module.exports = function (grunt) {
 			configFile = options.c || 'config.rb',
 			files, childProcess, targetQueue;
 
+		// using the external config option precludes the use of 'c' or project-level config option
+		if (!options.c && options.external_config) {
+			options.c = options.external_config;
+			configFile = 'config.rb';
+			delete options.external_config;
+		}
+
 		// gather a list of targets with a 'config.rb' from all the file matches found by Grunt's globbing engine
 		this.files.forEach(function (f) {
 			for (var i = 0; i < f.src.length; i += 1) {
+
 				// filter out folders that don't have a config.rb (ignoring common sub-folders to speed things up)
 				if (!f.src[i].match(options.ignore_pattern) && grunt.file.isDir(f.src[i])) {
 					files = fs.readdirSync(f.src[i]);
-					
-					if (_.indexOf(files, configFile) !== -1) {
+					console.log(files);
+					if (options.custom_match_pattern && typeof options.custom_match_pattern === 'object') {
+						for (var x = 0; x < files.length; x += 1) {
+							if (files[x].match(options.custom_match_pattern)) {
+								// once a match is found, push its parent
+								targets.push(f.src[i]);
+								break;
+							}
+						}
+					// if no custom match pattern is provided, look for the config file (usually config.rb)
+					} else if (_.indexOf(files, configFile) !== -1) {
 						// contains config.rb, add it to the list of compile targets
 						targets.push(f.src[i]);
 					}
@@ -65,6 +84,8 @@ module.exports = function (grunt) {
 
 		// transform task options into arguments compatible with the Compass CLI utility
 		delete options.ignore_pattern;
+		delete options.custom_match_pattern;
+
 		compilerOptions = transformOptions(options);
 
 		// begin
