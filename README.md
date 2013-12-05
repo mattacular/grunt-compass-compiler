@@ -61,6 +61,39 @@ Would compile each prod.rb found anywhere inside "sites/all/modules" by executin
 $ compass compile -c prod.rb --sass-dir=sass --javascripts-dir=js --css-dir=css --output-style=compressed
 ```
 
+**USING ADVANCED OPTIONS**
+
+With the advanced options, you can use this plugin to compile a project with decentralized Compass modules but all using a centralized or master config.rb.
+
+Consider a project with this structure:
+
+```bash
+$ ls /www/site/all/modules
+.
+..
+prod.rb
+module1/
+module2/
+moduleN/
+```
+
+Where you have modules 1-N, and within each module directory you have a 'sass/' subdir with Compass sass that needs to be compiled. The goal is to use prod.rb to compile each module's Compass files. Here is how you would configure the task:
+
+```js
+	compass: {
+		modules: {
+			options: {
+				sass_dir: 'sass',
+				external_config: '/www/site/prod.rb',
+				custom_match_pattern: /^sass$/
+			},
+			files: {
+				src: ['sites/all/modules/**/*'] // this assumes the Gruntfile.js is located at /www/sites/all
+			}
+		}
+	}
+```
+
 ## Documentation
 
 * The `compass` task is a [multi task](https://github.com/gruntjs/grunt/blob/master/docs/types_of_tasks.md#multi-tasks), meaning that it will implicitly iterate over all of its targets if no target is specified.
