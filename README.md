@@ -31,16 +31,19 @@ This allows you to use the 'compass' task to specify targets!
 	compass: {
 		modules: {
 			options: {
-				// standard compass cli options
 				css_dir: 'css',
 				sass_dir: 'sass',
 				javascripts_dir: 'js',
+				// the semi-colon prefix will be added for output_style (ie. you don't need to pass ':compressed')
 				output_style: (grunt.option('env') === 'prod') ? 'compressed' : 'expanded',
-				c: 'prod.rb'	// look for something other than config.rb and use it to compile
-				// advanced options
-				ignore_pattern: /sass|css|js|img|images|inc|includes/,	// paths you know won't contain a compass config
-				external_config: '/absolute/path/config.rb' // use a single config.rb to compile all targets. must be an absolute path.
-				custom_match_pattern: /^folder$/ // use something other than config.rb to match compass targets (eg. a subfolder of a glob match)
+				// use something other than 'config.rb' to compile matched targets
+				c: 'prod.rb'
+				// experimental: folders that you know won't contain a compass config (do not use preceding or trailing slashes)
+				ignore_pattern: /sass|css|js|img|images|inc|includes/,
+				// use a single config.rb to compile all targets. must be an absolute path (POSIX, tilde is not allowed)
+				external_config: '/absolute/path/config.rb' 
+				// use something other than a config.rb file to locate compass projects (eg. a subfolder of a glob match)
+				custom_match_pattern: /^folder$/
 			},
 			files: {
 				src: ['sites/all/modules/**/*']
@@ -65,12 +68,12 @@ $ compass compile -c prod.rb --sass-dir=sass --javascripts-dir=js --css-dir=css 
 
 **Master Config.rb Strategy**
 
-With the advanced options, you can use this plugin to compile a project with decentralized Compass modules but all using a centralized or master config.rb.
+With the advanced options, you can use this plugin to compile a project with decentralized Compass modules (ie. modules that use Compass fatures in their *.scss or *.sass files) as usual but instead of having to duplicate your config.rb acorss eacch module, it is possibble but all using a centralized or master config.rb.
 
 Consider a project with this structure:
 
 ```bash
-$ ls /www/site/all/modules
+$ ls /www/sites/all/modules
 .
 ..
 prod.rb
@@ -79,22 +82,38 @@ module2/
 moduleN/
 ```
 
-Where you have modules 1-N, and within each module directory you have a 'sass/' subdir with Compass sass that needs to be compiled. The goal is to use prod.rb to compile each module's Compass files. Here is how you would configure the task:
+Where you have modules 1-N, and within each module directory you have a 'sass/' subdir with Compass sass that needs to be compiled:
+
+```bash
+$ ls /www/sites/all/modules/module1
+.
+..
+module1.moudle
+sass/
+js/
+css/
+```
+
+Notice that "module1/" does not contain a "config.rb" file. That is why we are using the "custom_match_pattern" below - the existence of the "sass/" folder will be enough to have this module picked up as a Compass project when the task runs.
+
+The goal is to use prod.rb as the master config file to compile each individual modules' Compass files. Here is how you would configure the task:
 
 ```js
 	compass: {
 		modules: {
 			options: {
 				sass_dir: 'sass',
-				external_config: '/www/site/prod.rb',
+				external_config: '/www/sites/all/modules/prod.rb',
 				custom_match_pattern: /^sass$/
 			},
 			files: {
-				src: ['sites/all/modules/**/*'] // this assumes the Gruntfile.js is located at /www/sites/all
+				// this assumes the Gruntfile.js is located at /www/ (use dynamic expansion mode for more complex sourcing)
+				src: ['sites/all/modules/**/*'] 
 			}
 		}
 	}
 ```
+The task would compile all sass in module1-moduleN using '/www/sites/all/modules/prod.rb'
 
 ## Documentation
 
