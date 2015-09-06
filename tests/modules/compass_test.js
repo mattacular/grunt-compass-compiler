@@ -21,21 +21,21 @@ exports.compass = function (test) {
 			assertion: 'The "all options" output should match the expected folder.'
 		},
 		{
-			name: 'many',
+			name: 'many_1',
 			compare: 'test-many/tmp/test1.css',
-			expected: 'test-many/tmp/test1.css',
+			expected: 'test-many/expected/test1.css',
 			assertion: 'The first of ten in the "many" test should match the expected folder.'
 		},
 		{
-			name: 'many',
+			name: 'many_2',
 			compare: 'test-many/tmp/test5.css',
-			expected: 'test-many/tmp/test5.css',
+			expected: 'test-many/expected/test5.css',
 			assertion: 'The fifth of ten in the "many" test should match the expected folder.'
 		},
 		{
-			name: 'many',
+			name: 'many_3',
 			compare: 'test-many/tmp/test10.css',
-			expected: 'test-many/tmp/test10.css',
+			expected: 'test-many/expected/test10.css',
 			assertion: 'The tenth of ten in the "many" test should match the expected folder.'
 		}
 	];
