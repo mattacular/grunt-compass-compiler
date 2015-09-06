@@ -85,10 +85,17 @@ module.exports = function (grunt) {
 			// listen for process exit code
 			childProcess.on('exit', function (code) {
 				if (code !== 0) {
-					log.error('Something bad happened. Make sure \'compass\' and \'sass\' are in your path!');
+					if (code === 127) {
+						log.error('The \'compass\' command was not found in your system PATH. Make sure Compass is installed and that you can run `compass --version` without error.');
+					} else {
+						log.error('An unidentified error occurred while compiling the Compass project: \n\t' + task.directory.cyan + '\nCheck the Compass output above for errors. You may also look up the error code given below for clues.');
+						log.error('Error code: ' + code.toString().red);
+					}
+
 					return done(false);
 				}
-				log.writeln('\t`-->'.cyan + ' Done compiling Compass project @ ' + task.directory.cyan);
+
+				log.writeln('\t`-->'.cyan + ' Compiled Compass project @ ' + task.directory.cyan);
 				callback(); // task is finished
 			});
 		}, 4);
