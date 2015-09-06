@@ -4,12 +4,12 @@ A [Grunt](http://gruntjs.com) plugin for compiling multiple Compass projects (ie
 
 ## Getting Started
 
-**IMPORTANT**: This plugin requires at least ***Grunt 0.4*** or higher and ***Compass 0.12.2*** or higher - it is recommended that you always run the latest versions of both.
+**IMPORTANT**: This plugin requires at least ***Grunt 0.4*** or higher and ***Compass 1.X.X*** or higher - it is recommended that you always run the latest versions of both.
 
 Ensure you have Compass installed and in your PATH by checking for its version. If you get an error, install it.
 
 ```bash
-$ compass --version   # you should see version 0.12.2 or higher
+$ compass --version   # you should see version 1.X.X or higher
 $ gem install compass # if you get an error
 ```
 
